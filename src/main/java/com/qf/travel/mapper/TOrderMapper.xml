@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.TOrderMapper">
+  <resultMap id="BaseResultMap" type="com.qf.travel.entity.TOrder">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="orderid" jdbcType="VARCHAR" property="orderid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="scenic" jdbcType="VARCHAR" property="scenic" />
+    <result column="departuretime" jdbcType="DATE" property="departuretime" />
+    <result column="adultprice" jdbcType="DOUBLE" property="adultprice" />
+    <result column="adult" jdbcType="INTEGER" property="adult" />
+    <result column="childprice" jdbcType="DOUBLE" property="childprice" />
+    <result column="child" jdbcType="INTEGER" property="child" />
+    <result column="total" jdbcType="INTEGER" property="total" />
+    <result column="money" jdbcType="DOUBLE" property="money" />
+    <result column="ispay" jdbcType="INTEGER" property="ispay" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, orderid, title, scenic, departuretime, adultprice, adult, childprice, child, 
+    total, money, ispay,userid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qf.travel.entity.TOrder">
+    insert into t_order (id, orderid, title, 
+      scenic, departuretime, adultprice, 
+      adult, childprice, child, 
+      total, money, userid
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{scenic,jdbcType=VARCHAR}, #{departuretime,jdbcType=DATE}, #{adultprice,jdbcType=DOUBLE}, 
+      #{adult,jdbcType=INTEGER}, #{childprice,jdbcType=DOUBLE}, #{child,jdbcType=INTEGER}, 
+      #{total,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, #{userid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.travel.entity.TOrder">
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="scenic != null">
+        scenic,
+      </if>
+      <if test="departuretime != null">
+        departuretime,
+      </if>
+      <if test="adultprice != null">
+        adultprice,
+      </if>
+      <if test="adult != null">
+        adult,
+      </if>
+      <if test="childprice != null">
+        childprice,
+      </if>
+      <if test="child != null">
+        child,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="scenic != null">
+        #{scenic,jdbcType=VARCHAR},
+      </if>
+      <if test="departuretime != null">
+        #{departuretime,jdbcType=DATE},
+      </if>
+      <if test="adultprice != null">
+        #{adultprice,jdbcType=DOUBLE},
+      </if>
+      <if test="adult != null">
+        #{adult,jdbcType=INTEGER},
+      </if>
+      <if test="childprice != null">
+        #{childprice,jdbcType=DOUBLE},
+      </if>
+      <if test="child != null">
+        #{child,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.travel.entity.TOrder">
+    update t_order
+    <set>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="scenic != null">
+        scenic = #{scenic,jdbcType=VARCHAR},
+      </if>
+      <if test="departuretime != null">
+        departuretime = #{departuretime,jdbcType=DATE},
+      </if>
+      <if test="adultprice != null">
+        adultprice = #{adultprice,jdbcType=DOUBLE},
+      </if>
+      <if test="adult != null">
+        adult = #{adult,jdbcType=INTEGER},
+      </if>
+      <if test="childprice != null">
+        childprice = #{childprice,jdbcType=DOUBLE},
+      </if>
+      <if test="child != null">
+        child = #{child,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.travel.entity.TOrder">
+    update t_order
+    set orderid = #{orderid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      scenic = #{scenic,jdbcType=VARCHAR},
+      departuretime = #{departuretime,jdbcType=DATE},
+      adultprice = #{adultprice,jdbcType=DOUBLE},
+      adult = #{adult,jdbcType=INTEGER},
+      childprice = #{childprice,jdbcType=DOUBLE},
+      child = #{child,jdbcType=INTEGER},
+      total = #{total,jdbcType=INTEGER},
+      money = #{money,jdbcType=DOUBLE},
+      userid = #{userid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getCount" parameterType="int" resultType="int">
+    SELECT COUNT(1) FROM t_order WHERE userid = #{userid}
+  </select>
+
+  <select id="getOrderByStartAndCount" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> from t_order WHERE userid = #{userid} limit #{start},#{count}
+  </select>
+
+  <update id="confirmOrder" parameterType="string">
+    UPDATE t_order SET ispay = 1 WHERE orderid = #{orderid}
+  </update>
+
+  <select id="getAllOrders" parameterType="int" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM t_order WHERE userid = #{id}
+  </select>
+
+  <!--后端：获得景点的分页数据-->
+  <select id="getList" resultMap="BaseResultMap">
+    SELECT * FROM t_order WHERE ispay =1
+  </select>
+
+  <!--后端：批量删除景点订单的方法-->
+  <delete id="batchDelScenicSpotOrderByIds" parameterType="int">
+    DELETE FROM t_order WHERE id IN
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

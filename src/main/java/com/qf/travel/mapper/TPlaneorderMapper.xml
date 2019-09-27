@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.TPlaneorderMapper">
+  <resultMap id="BaseResultMap" type="com.qf.travel.entity.TPlaneorder">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="booking" jdbcType="VARCHAR" property="booking" />
+    <result column="departurecity" jdbcType="VARCHAR" property="departurecity" />
+    <result column="arrivalcity" jdbcType="VARCHAR" property="arrivalcity" />
+    <result column="departuretime" jdbcType="DATE" property="departuretime" />
+    <result column="airlinecompany" jdbcType="VARCHAR" property="airlinecompany" />
+    <result column="shipspace" jdbcType="VARCHAR" property="shipspace" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="phonenumber" jdbcType="VARCHAR" property="phonenumber" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, booking, departurecity, arrivalcity, departuretime, airlinecompany, shipspace, 
+    realname, phonenumber, email, address, remarks, userid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_planeorder
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_planeorder
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qf.travel.entity.TPlaneorder">
+    insert into t_planeorder (id, booking, departurecity, 
+      arrivalcity, departuretime, airlinecompany, 
+      shipspace, realname, phonenumber, 
+      email, address, remarks, 
+      userid)
+    values (#{id,jdbcType=INTEGER}, #{booking,jdbcType=VARCHAR}, #{departurecity,jdbcType=VARCHAR}, 
+      #{arrivalcity,jdbcType=VARCHAR}, #{departuretime,jdbcType=DATE}, #{airlinecompany,jdbcType=VARCHAR}, 
+      #{shipspace,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{phonenumber,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.travel.entity.TPlaneorder">
+    insert into t_planeorder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="booking != null">
+        booking,
+      </if>
+      <if test="departurecity != null">
+        departurecity,
+      </if>
+      <if test="arrivalcity != null">
+        arrivalcity,
+      </if>
+      <if test="departuretime != null">
+        departuretime,
+      </if>
+      <if test="airlinecompany != null">
+        airlinecompany,
+      </if>
+      <if test="shipspace != null">
+        shipspace,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="phonenumber != null">
+        phonenumber,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="booking != null">
+        #{booking,jdbcType=VARCHAR},
+      </if>
+      <if test="departurecity != null">
+        #{departurecity,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivalcity != null">
+        #{arrivalcity,jdbcType=VARCHAR},
+      </if>
+      <if test="departuretime != null">
+        #{departuretime,jdbcType=DATE},
+      </if>
+      <if test="airlinecompany != null">
+        #{airlinecompany,jdbcType=VARCHAR},
+      </if>
+      <if test="shipspace != null">
+        #{shipspace,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null">
+        #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.travel.entity.TPlaneorder">
+    update t_planeorder
+    <set>
+      <if test="booking != null">
+        booking = #{booking,jdbcType=VARCHAR},
+      </if>
+      <if test="departurecity != null">
+        departurecity = #{departurecity,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivalcity != null">
+        arrivalcity = #{arrivalcity,jdbcType=VARCHAR},
+      </if>
+      <if test="departuretime != null">
+        departuretime = #{departuretime,jdbcType=DATE},
+      </if>
+      <if test="airlinecompany != null">
+        airlinecompany = #{airlinecompany,jdbcType=VARCHAR},
+      </if>
+      <if test="shipspace != null">
+        shipspace = #{shipspace,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null">
+        phonenumber = #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.travel.entity.TPlaneorder">
+    update t_planeorder
+    set booking = #{booking,jdbcType=VARCHAR},
+      departurecity = #{departurecity,jdbcType=VARCHAR},
+      arrivalcity = #{arrivalcity,jdbcType=VARCHAR},
+      departuretime = #{departuretime,jdbcType=DATE},
+      airlinecompany = #{airlinecompany,jdbcType=VARCHAR},
+      shipspace = #{shipspace,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      phonenumber = #{phonenumber,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--分页查询机票订单的数据-->
+  <select id="getList" resultMap="BaseResultMap">
+    SELECT * FROM t_planeorder
+  </select>
+
+  <!--批量删除机票订单的方法-->
+  <delete id="batchDelPlaneOrderByIds" parameterType="int">
+    DELETE FROM t_planeorder WHERE id IN
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

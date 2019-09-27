@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.TUserMapper">
+  <resultMap id="BaseResultMap" type="com.qf.travel.entity.TUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phonenumber" jdbcType="VARCHAR" property="phonenumber" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="idtype" jdbcType="VARCHAR" property="idtype" />
+    <result column="idnumber" jdbcType="VARCHAR" property="idnumber" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="post" jdbcType="VARCHAR" property="post" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="lockstate" jdbcType="INTEGER" property="lockstate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, password, phonenumber, email, realname, sex, idtype, idnumber, birthday,
+    post, address, lockstate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qf.travel.entity.TUser">
+    insert into t_user (id, username, password,
+    phonenumber, email, realname,
+    sex, idtype, idnumber,
+    birthday, post, address,
+    lockstate)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{phonenumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR},
+    #{sex,jdbcType=VARCHAR}, #{idtype,jdbcType=VARCHAR}, #{idnumber,jdbcType=VARCHAR},
+    #{birthday,jdbcType=DATE}, #{post,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+    #{lockstate,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.travel.entity.TUser">
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="phonenumber != null">
+        phonenumber,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="idtype != null">
+        idtype,
+      </if>
+      <if test="idnumber != null">
+        idnumber,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="post != null">
+        post,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="lockstate != null">
+        lockstate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null">
+        #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="idtype != null">
+        #{idtype,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumber != null">
+        #{idnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="post != null">
+        #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lockstate != null">
+        #{lockstate,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.travel.entity.TUser">
+    update t_user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null">
+        phonenumber = #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="idtype != null">
+        idtype = #{idtype,jdbcType=VARCHAR},
+      </if>
+      <if test="idnumber != null">
+        idnumber = #{idnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="post != null">
+        post = #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lockstate != null">
+        lockstate = #{lockstate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.travel.entity.TUser">
+    update t_user
+    set username = #{username,jdbcType=VARCHAR},
+    password = #{password,jdbcType=VARCHAR},
+    phonenumber = #{phonenumber,jdbcType=VARCHAR},
+    email = #{email,jdbcType=VARCHAR},
+    realname = #{realname,jdbcType=VARCHAR},
+    sex = #{sex,jdbcType=VARCHAR},
+    idtype = #{idtype,jdbcType=VARCHAR},
+    idnumber = #{idnumber,jdbcType=VARCHAR},
+    birthday = #{birthday,jdbcType=DATE},
+    post = #{post,jdbcType=VARCHAR},
+    address = #{address,jdbcType=VARCHAR},
+    lockstate = #{lockstate,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--注册,ajax判断用户是否存在-->
+  <select id="queryUserByUserName" parameterType="string" resultType="com.qf.travel.entity.TUser">
+    select * from t_user where username=#{username}
+  </select>
+
+  <!--用户注册-->
+  <insert id="addUser" parameterType="com.qf.travel.entity.TUser" >
+    insert into t_user ( username, password,phonenumber, email)values ( #{username}, #{password},#{phonenumber}, #{email})
+  </insert>
+
+  <!--根据用户id修改密码-->
+  <update id="updatePwdById" >
+    update t_user set password = #{password} WHERE  id = #{id}
+  </update>
+
+
+  <!--根据用户信息修改密码-->
+  <update id="modofyPwdByEmail" >
+    update t_user set password = #{password} WHERE  email = #{email}
+  </update>
+
+  <update id="modofyPwdByPhone" >
+    update t_user set password = #{password} WHERE  phonenumber = #{phonenumber}
+  </update>
+
+  <update id="modofyPwdByUsername" >
+    update t_user set password = #{password} WHERE  username = #{username}
+  </update>
+
+
+
+  <!--根据条件查询用户分页数据-->
+  <select id="queryUserListByCondition" parameterType="tUser" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM t_user
+    <where>
+      <if test="username !=null and username !='' ">
+        and username like concat('%',#{username},'%')
+      </if>
+      <if test="email !=null and email !='' ">
+        and email like concat('%',#{email},'%')
+      </if>
+      <if test="phonenumber !=null and phonenumber !='' ">
+        and phonenumber like concat('%',#{phonenumber},'%')
+      </if>
+    </where>
+  </select>
+
+  <!--ajax,停用/启用-->
+  <update id="controlUserLockstate">
+    UPDATE  t_user set lockstate = #{lockstate} where id=#{id}
+  </update>
+
+  <!--ajax，单个删除用户的方法-->
+  <delete id="delUserById" parameterType="int">
+    delete from t_user where id = #{id}
+  </delete>
+
+  <!--ajax,批量删除用户的方法-->
+  <delete id="batchDelUserByIds" parameterType="int">
+      DELETE FROM t_user WHERE id in
+      <foreach collection="array" item="id" open="(" close=")" separator=",">
+        #{id}
+      </foreach>
+  </delete>
+
+  <!--前端登录，通过用户名及密码查询用户对象是否存在-->
+  <select id="queryUserByUserNameAndPwd" resultMap="BaseResultMap">
+    SELECT * FROM t_user WHERE username =#{username} AND password =#{password}
+  </select>
+
+
+</mapper>

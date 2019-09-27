@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.THotelMapper">
+  <resultMap id="BaseResultMap" type="com.qf.travel.entity.THotel">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cityname" jdbcType="VARCHAR" property="cityname" />
+    <result column="hotelname" jdbcType="VARCHAR" property="hotelname" />
+    <result column="hoteladdress" jdbcType="VARCHAR" property="hoteladdress" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cityname, hotelname, hoteladdress
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_hotel
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+<!--  根据名称查询酒店-->
+  <select id="queryHotelByUserName" parameterType="string" resultMap="BaseResultMap">
+    SELECT * from t_hotel where hotelname=#{hotelname}
+
+  </select>
+  <!--查询所有酒店-->
+<!--  <select id="queryAllHotelList" resultMap="BaseResultMap">
+    SELECT * from t_hotel
+  </select>-->
+  <select id="queryAllHotelList" parameterType="tHotel" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM t_hotel
+    <where>
+      <if test="hotelname !=null and hotelname !='' ">
+        and hotelname like concat('%',#{hotelname},'%')
+      </if>
+      <if test="hoteladdress !=null and hoteladdress !='' ">
+        and hoteladdress like concat('%',#{hoteladdress},'%')
+      </if>
+      <if test="cityname !=null and cityname !='' ">
+        and cityname like concat('%',#{cityname},'%')
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_hotel
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+ <!-- 删除酒店-->
+ <!-- <delete id="delHotelById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+  </delete>-->
+  <insert id="insert" parameterType="com.qf.travel.entity.THotel">
+    insert into t_hotel (id, cityname, hotelname, 
+      hoteladdress)
+    values (#{id,jdbcType=INTEGER}, #{cityname,jdbcType=VARCHAR}, #{hotelname,jdbcType=VARCHAR}, 
+      #{hoteladdress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.travel.entity.THotel">
+    insert into t_hotel
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cityname != null">
+        cityname,
+      </if>
+      <if test="hotelname != null">
+        hotelname,
+      </if>
+      <if test="hoteladdress != null">
+        hoteladdress,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cityname != null">
+        #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelname != null">
+        #{hotelname,jdbcType=VARCHAR},
+      </if>
+      <if test="hoteladdress != null">
+        #{hoteladdress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+<!--  批量删除hotel-->
+  <delete id="batchDelHotelByIds" parameterType="int">
+    DELETE FROM t_hotel WHERE id in
+    <foreach collection="array" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.travel.entity.THotel">
+    update t_hotel
+    <set>
+      <if test="cityname != null" >
+        cityname = #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelname != null" >
+        hotelname = #{hotelname,jdbcType=VARCHAR},
+      </if>
+      <if test="hoteladdress != null">
+        hoteladdress = #{hoteladdress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.travel.entity.THotel">
+    update t_hotel
+    set cityname = #{cityname,jdbcType=VARCHAR},
+      hotelname = #{hotelname,jdbcType=VARCHAR},
+      hoteladdress = #{hoteladdress,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

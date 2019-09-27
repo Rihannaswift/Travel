@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!--1.配置securityManager安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myRealm"/>
+        <!-- 加入rememberMe管理 -->
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+        <!--加入缓存管理器-->
+        <property name="cacheManager" ref="cacheManager" />
+    </bean>
+
+    <!--2.配置一个自定义realm的对象 ,没有盐值，盐值需要自己提供-->
+    <bean id="myRealm" class="com.qf.travel.realm.MyRealm">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <!-- 加密的算法 -->
+                <property name="hashAlgorithmName" value="MD5"></property>
+                <!--加密次数 -->
+                <property name="hashIterations" value="1024"></property>
+            </bean>
+        </property>
+    </bean>
+
+    <!--3.配置rememberMe-->
+
+    <!--（1） remember me cookie(cookie的保存时间长一点,不随浏览器的关闭而关闭)-->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="rememberMe"/>
+        <property name="httpOnly" value="true"/>
+        <property name="maxAge" value="2592000"/><!-- 30天 -->
+    </bean>
+
+    <!-- （2）配置rememberMe管理器，对cookie进行加密-->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <!-- rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位）-->
+        <property name="cipherKey"
+                  value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}"/>
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+
+
+    <!-- 4.配置缓存管理器 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <!-- cache配置文件 -->
+        <property name="cacheManagerConfigFile" value="classpath:spring/ehcache.xml" />
+    </bean>
+
+
+    <!--5.一些其他配置，现在暂时看不懂这些配置-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+    <bean id="secureRemoteInvocationExecutor" class="org.apache.shiro.spring.remoting.SecureRemoteInvocationExecutor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+    <!--6.配置shiroFilter的具体参数-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!--登录地址-->
+        <!--<property name="loginUrl" value="/application/login.jsp"/>-->
+        <!--过滤器配置securityManager来接管-->
+        <property name="securityManager" ref="securityManager"/>
+        <!--过滤放行的定义-->
+        <property name="filterChainDefinitions">
+            <value>
+                <!--退出-->
+                /logout=logout
+
+                <!--静态资源放行-->
+                /css/**=anon
+                /images/**=anon
+                /js/**=anon
+                /layui/**=anon
+                /lib/**=anon
+                /Scripts/**=anon
+                /skin/**=anon
+                <!--验证码请求放行-->
+                /Vcode/code=anon
+
+                <!--前端放行-->
+
+
+                <!--后台登录放行-->
+                /back/login.jsp=anon
+                /**=user
+
+            </value>
+        </property>
+    </bean>
+    
+</beans>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.TScenicDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.qf.travel.entity.TScenicDetails">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="departuredate" jdbcType="DATE" property="departuredate" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="adultprice" jdbcType="DOUBLE" property="adultprice" />
+    <result column="childprice" jdbcType="DOUBLE" property="childprice" />
+    <result column="acceptable" jdbcType="INTEGER" property="acceptable" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="scenicid" jdbcType="INTEGER" property="scenicid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, departuredate, standard, adultprice, childprice, acceptable, location, scenicid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_scenic_details
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_scenic_details
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qf.travel.entity.TScenicDetails">
+    insert into t_scenic_details (id, departuredate, standard, 
+      adultprice, childprice, acceptable, 
+      location, scenicid)
+    values (#{id,jdbcType=INTEGER}, #{departuredate,jdbcType=DATE}, #{standard,jdbcType=VARCHAR}, 
+      #{adultprice,jdbcType=DOUBLE}, #{childprice,jdbcType=DOUBLE}, #{acceptable,jdbcType=INTEGER}, 
+      #{location,jdbcType=VARCHAR}, #{scenicid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.travel.entity.TScenicDetails">
+    insert into t_scenic_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="departuredate != null">
+        departuredate,
+      </if>
+      <if test="standard != null">
+        standard,
+      </if>
+      <if test="adultprice != null">
+        adultprice,
+      </if>
+      <if test="childprice != null">
+        childprice,
+      </if>
+      <if test="acceptable != null">
+        acceptable,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="scenicid != null">
+        scenicid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="departuredate != null">
+        #{departuredate,jdbcType=DATE},
+      </if>
+      <if test="standard != null">
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="adultprice != null">
+        #{adultprice,jdbcType=DOUBLE},
+      </if>
+      <if test="childprice != null">
+        #{childprice,jdbcType=DOUBLE},
+      </if>
+      <if test="acceptable != null">
+        #{acceptable,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicid != null">
+        #{scenicid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.travel.entity.TScenicDetails">
+    update t_scenic_details
+    <set>
+      <if test="departuredate != null">
+        departuredate = #{departuredate,jdbcType=DATE},
+      </if>
+      <if test="standard != null">
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="adultprice != null">
+        adultprice = #{adultprice,jdbcType=DOUBLE},
+      </if>
+      <if test="childprice != null">
+        childprice = #{childprice,jdbcType=DOUBLE},
+      </if>
+      <if test="acceptable != null">
+        acceptable = #{acceptable,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicid != null">
+        scenicid = #{scenicid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.travel.entity.TScenicDetails">
+    update t_scenic_details
+    set departuredate = #{departuredate,jdbcType=DATE},
+      standard = #{standard,jdbcType=VARCHAR},
+      adultprice = #{adultprice,jdbcType=DOUBLE},
+      childprice = #{childprice,jdbcType=DOUBLE},
+      acceptable = #{acceptable,jdbcType=INTEGER},
+      location = #{location,jdbcType=VARCHAR},
+      scenicid = #{scenicid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getScenicDetailsList" parameterType="int" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> from t_scenic_details WHERE scenicid = #{id}
+
+  </select>
+</mapper>

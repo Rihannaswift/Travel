@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.TMenuMapper">
+  <resultMap id="BaseResultMap" type="com.qf.travel.entity.TMenu">
+    <id column="menuId" jdbcType="INTEGER" property="menuid" />
+    <result column="menu_parentId" jdbcType="INTEGER" property="menuParentid" />
+    <result column="menuName" jdbcType="VARCHAR" property="menuname" />
+    <result column="menuType" jdbcType="INTEGER" property="menutype" />
+    <result column="menuPath" jdbcType="VARCHAR" property="menupath" />
+    <result column="menuDesc" jdbcType="VARCHAR" property="menudesc" />
+    <result column="is_Publish" jdbcType="INTEGER" property="isPublish" />
+    <result column="creatTime" jdbcType="DATE" property="creattime" />
+    <result column="updateTime" jdbcType="DATE" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    menuId, menu_parentId, menuName, menuType, menuPath, menuDesc, is_Publish, creatTime, 
+    updateTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_menu
+    where menuId = #{menuid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_menu
+    where menuId = #{menuid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qf.travel.entity.TMenu">
+    insert into t_menu (menuId, menu_parentId, menuName, 
+      menuType, menuPath, menuDesc, 
+      is_Publish, creatTime, updateTime
+      )
+    values (#{menuid,jdbcType=INTEGER}, #{menuParentid,jdbcType=INTEGER}, #{menuname,jdbcType=VARCHAR}, 
+      #{menutype,jdbcType=INTEGER}, #{menupath,jdbcType=VARCHAR}, #{menudesc,jdbcType=VARCHAR}, 
+      #{isPublish,jdbcType=INTEGER}, #{creattime,jdbcType=DATE}, #{updatetime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.travel.entity.TMenu">
+    insert into t_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="menuid != null">
+        menuId,
+      </if>
+      <if test="menuParentid != null">
+        menu_parentId,
+      </if>
+      <if test="menuname != null">
+        menuName,
+      </if>
+      <if test="menutype != null">
+        menuType,
+      </if>
+      <if test="menupath != null">
+        menuPath,
+      </if>
+      <if test="menudesc != null">
+        menuDesc,
+      </if>
+      <if test="isPublish != null">
+        is_Publish,
+      </if>
+      <if test="creattime != null">
+        creatTime,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="menuid != null">
+        #{menuid,jdbcType=INTEGER},
+      </if>
+      <if test="menuParentid != null">
+        #{menuParentid,jdbcType=INTEGER},
+      </if>
+      <if test="menuname != null">
+        #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menutype != null">
+        #{menutype,jdbcType=INTEGER},
+      </if>
+      <if test="menupath != null">
+        #{menupath,jdbcType=VARCHAR},
+      </if>
+      <if test="menudesc != null">
+        #{menudesc,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublish != null">
+        #{isPublish,jdbcType=INTEGER},
+      </if>
+      <if test="creattime != null">
+        #{creattime,jdbcType=DATE},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.travel.entity.TMenu">
+    update t_menu
+    <set>
+      <if test="menuParentid != null">
+        menu_parentId = #{menuParentid,jdbcType=INTEGER},
+      </if>
+      <if test="menuname != null">
+        menuName = #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menutype != null">
+        menuType = #{menutype,jdbcType=INTEGER},
+      </if>
+      <if test="menupath != null">
+        menuPath = #{menupath,jdbcType=VARCHAR},
+      </if>
+      <if test="menudesc != null">
+        menuDesc = #{menudesc,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublish != null">
+        is_Publish = #{isPublish,jdbcType=INTEGER},
+      </if>
+      <if test="creattime != null">
+        creatTime = #{creattime,jdbcType=DATE},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=DATE},
+      </if>
+    </set>
+    where menuId = #{menuid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.travel.entity.TMenu">
+    update t_menu
+    set menu_parentId = #{menuParentid,jdbcType=INTEGER},
+      menuName = #{menuname,jdbcType=VARCHAR},
+      menuType = #{menutype,jdbcType=INTEGER},
+      menuPath = #{menupath,jdbcType=VARCHAR},
+      menuDesc = #{menudesc,jdbcType=VARCHAR},
+      is_Publish = #{isPublish,jdbcType=INTEGER},
+      creatTime = #{creattime,jdbcType=DATE},
+      updateTime = #{updatetime,jdbcType=DATE}
+    where menuId = #{menuid,jdbcType=INTEGER}
+  </update>
+
+  <!--查询所有的菜单信息-->
+  <select id="getList" resultMap="BaseResultMap">
+    SELECT * FROM t_menu
+  </select>
+
+  <!--查询当前角色下所拥有的菜单-->
+  <select id="queryAuthorizationMenuByRoleId" parameterType="int" resultMap="BaseResultMap">
+    select * from t_menu where menuId in (select menuId from t_role_menu where roleId = #{roleId})
+  </select>
+
+  <!--授权新菜单，删除原有的角色-菜单对应关系-->
+  <delete id="delAllMenu" parameterType="int">
+    DELETE  FROM t_role_menu WHERE roleId =#{roleId}
+  </delete>
+  
+  <!--授权新菜单，添加角色-菜单对应关系-->
+  <insert id="addMenuByRole" >
+    INSERT  into t_role_menu (roleId,menuId) VALUES
+    <foreach collection="ids" item="menuId" separator=",">
+      (#{roleId},#{menuId})
+    </foreach>
+  </insert>
+
+  <!--根据用户ID查询拥有的菜单-->
+  <select id="getMenuListById" parameterType="int"  resultMap="BaseResultMap">
+    select DISTINCT m.* FROM
+    t_role_admin ru,
+    t_role_menu rm,
+    t_menu m
+    where ru.adminId = #{Id}
+    and ru.roleId = rm.roleId
+    and rm.menuId = m.menuId
+    and m.is_Publish = 1
+  </select>
+
+</mapper>
+
+
+
+
+
+
+
+

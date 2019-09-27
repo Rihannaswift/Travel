@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.travel.mapper.TRoleMapper">
+  <resultMap id="BaseResultMap" type="com.qf.travel.entity.TRole">
+    <id column="roleId" jdbcType="INTEGER" property="roleid" />
+    <result column="roleName" jdbcType="VARCHAR" property="rolename" />
+    <result column="roleDesc" jdbcType="VARCHAR" property="roledesc" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="creatTime" jdbcType="DATE" property="creattime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    roleId, roleName, roleDesc, flag, creatTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_role
+    where roleId = #{roleid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_role
+    where roleId = #{roleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qf.travel.entity.TRole">
+    insert into t_role (roleId, roleName, roleDesc, 
+      flag, creatTime)
+    values (#{roleid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, #{roledesc,jdbcType=VARCHAR}, 
+      #{flag,jdbcType=INTEGER}, #{creattime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.travel.entity.TRole">
+    insert into t_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleid != null">
+        roleId,
+      </if>
+      <if test="rolename != null">
+        roleName,
+      </if>
+      <if test="roledesc != null">
+        roleDesc,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="creattime != null">
+        creatTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleid != null">
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="rolename != null">
+        #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roledesc != null">
+        #{roledesc,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="creattime != null">
+        #{creattime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.travel.entity.TRole">
+    update t_role
+    <set>
+      <if test="rolename != null">
+        roleName = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roledesc != null">
+        roleDesc = #{roledesc,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="creattime != null">
+        creatTime = #{creattime,jdbcType=DATE},
+      </if>
+    </set>
+    where roleId = #{roleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.travel.entity.TRole">
+    update t_role
+    set roleName = #{rolename,jdbcType=VARCHAR},
+      roleDesc = #{roledesc,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=INTEGER},
+      creatTime = #{creattime,jdbcType=DATE}
+    where roleId = #{roleid,jdbcType=INTEGER}
+  </update>
+
+  <!--查询所有角色信息-->
+  <select id="getList" resultMap="BaseResultMap">
+    SELECT * FROM t_role
+  </select>
+
+  <!--批量删除角色-用户对应关系-->
+  <delete id="delBatchAdminRole" parameterType="int">
+    DELETE FROM t_role_admin WHERE adminId in
+    <foreach collection="list" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
+  <!--批量添加角色-用户对应关系-->
+  <insert id="batchAddAdminRole" >
+    insert into t_role_admin (adminId,roleId) VALUES
+    <foreach collection="ids" item="id" separator=",">
+      (#{id},#{roleId})
+    </foreach>
+  </insert>
+
+  <!--解除单个角色-用户授权关系-->
+  <delete id="delAuthAdmin">
+    DELETE FROM t_role_admin WHERE adminId=#{id} and roleId=#{roleId}
+  </delete>
+
+</mapper>
